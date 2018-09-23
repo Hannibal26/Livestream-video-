@@ -1,7 +1,5 @@
 import cv2
-
 import numpy as np
-
 import os
 
 
@@ -36,11 +34,11 @@ currentFrame = 0
 
 # Get current width of frame
 
-width = cap.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)   # float
+width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)   # float
 
 # Get current height of frame
 
-height = cap.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT) # float
+height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) # float
 
 
 
@@ -48,11 +46,11 @@ height = cap.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT) # float
 
 # Define the codec and create VideoWriter object
 
-fourcc = cv2.cv.CV_FOURCC(*'X264')
+
+
+fourcc = cv2.VideoWriter_fourcc(*'MJPG') #*'X264'
 
 out = cv2.VideoWriter(FILE_OUTPUT,fourcc, 20.0, (int(width),int(height)))
-
-
 
 # while(True):
 
@@ -61,65 +59,28 @@ while(cap.isOpened()):
     # Capture frame-by-frame
 
     ret, frame = cap.read()
-
-
-
     if ret == True:
-
         # Handles the mirroring of the current frame
-
         frame = cv2.flip(frame,1)
-
-
-
         # Saves for video
-
         out.write(frame)
-
-
-
         # Display the resulting frame
-
         cv2.imshow('frame',frame)
-
     else:
-
         break
-
     if cv2.waitKey(1) & 0xFF == ord('q'):
-
         break
-
-
-
     # To stop duplicate images
-
     currentFrame += 1
-
-
-
 # When everything done, release the capture
-
 cap.release()
-
 out.release()
-
 cv2.destroyAllWindows()
-
-
-
 # Potential Error:
-
 # OpenCV: Cannot Use FaceTime HD Kamera
-
 # OpenCV: camera failed to properly initialize!
-
 # Segmentation fault: 11
-
 #
-
 # Solution:
-
 # I solved this by restarting my computer.
-
 # http://stackoverflow.com/questions/40719136/opencv-cannot-use-facetime/42678644#42678644
